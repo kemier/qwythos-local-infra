@@ -1,0 +1,19 @@
+# llama.cpp source tree (third-party)
+src-latest/
+
+# model weights
+models/
+
+# logs
+*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Claude Code
+.claude/
