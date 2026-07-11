@@ -142,6 +142,7 @@ model_provider = "custom"
 model = "qwythos"
 model_reasoning_effort = "high"
 disable_response_storage = true
+model_auto_compact_token_limit = 200000
 
 [model_providers.custom]
 name = "custom"
@@ -151,6 +152,8 @@ requires_openai_auth = false
 stream_idle_timeout_ms = 600000
 stream_max_retries = 3
 ```
+
+`model_auto_compact_token_limit` 是自定义 provider 接入本地模型时**唯一需要多填的一行**。没有它的话，Codex 只能靠 `/v1/models` 返回的 `context_length` 来判断 —— 而之前那个字段是空的，所以 compact 永远不触发。现在 proxy 虽然已经注入了 `context_length`，但显式写上更稳妥：即使哪天 proxy 没跑，Codex 也有 200K 压缩阈值兜底，不会撞到 llama-server 的 262K 硬上限。
 
 ### 4. 使用
 
